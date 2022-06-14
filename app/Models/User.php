@@ -30,7 +30,7 @@ class User extends Authenticatable
         'password',
         'provider', 'provider_id','profile_photo_path'
     ];
-
+   
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -60,4 +60,12 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function run()
+
+    {
+
+        User::factory()->count(15)->create();
+
+    }
 }

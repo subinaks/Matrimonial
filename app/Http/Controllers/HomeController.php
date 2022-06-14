@@ -32,13 +32,16 @@ class HomeController extends Controller
     }
     public function home()
     {
+        $gender=UserDetail::where('user_id',\Auth::user()->id)->first();
         $users=User::join('user_details','user_details.user_id','users.id')
         ->join('user_partner_preferences','user_partner_preferences.user_id','user_details.user_id')
         ->join('occupations','occupations.id','user_details.occupation')
         ->select('users.first_name','users.last_name','users.email',
         'user_details.gender','user_details.annual_income','user_details.occupation','user_details.family','user_details.manglik',
         'occupations.title')
-        ->where('users.id','!=',\Auth::user()->id)->get();
+        ->where('users.id','!=',\Auth::user()->id)
+        ->where('user_details.gender','!=',$gender->gender)
+        ->get();
         $userArray=array();
         foreach($users as $user)
         {
